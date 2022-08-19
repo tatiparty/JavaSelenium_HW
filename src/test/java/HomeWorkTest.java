@@ -16,22 +16,19 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
 
-public class HomeWork {
+public class HomeWorkTest {
 
     private String login;
     private String password;
     public String browser;
 
-    By firstName = By.id("id_fname");
-    By secondName = By.id("id_lname");
-    By blogName = By.id("id_blog_name");
-    By country = By.xpath("//input[@name = 'country']/following-sibling::div");
-    By city = By.xpath("//input[@name = 'city']/following-sibling::div");
-    By language = By.xpath("//input[@name = 'english_level']/following-sibling::div");
+    private By firstName = By.id("id_fname");
+    private By secondName = By.id("id_lname");
+    private By blogName = By.id("id_blog_name");
 
     private org.apache.logging.log4j.Logger logger = LogManager.getLogger(Logger.class);
 
-    protected WebDriver driver;
+    private WebDriver driver;
 
     @Before
     public void setUp(){
@@ -41,8 +38,13 @@ public class HomeWork {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        login = properties.getProperty("login");
-        password = properties.getProperty("password");
+        //login = properties.getProperty("login");
+        //password = properties.getProperty("password");
+
+        //не работает
+        Properties prop = System.getProperties();
+        login = System.getProperty("login");
+        password = System.getProperty("password");
         browser = properties.getProperty("browser");
 
         driver = WebDriverFactory.create(browser.toUpperCase());
@@ -125,33 +127,15 @@ public class HomeWork {
         enterToTextArea(getElement(firstName), "Тест");
         enterToTextArea(getElement(secondName), "Тест");
         enterToTextArea(getElement(blogName), "Тест");
-        driver.findElement(country).click();
-        List<WebElement> webElementsCountry = driver.findElements(By.xpath("//div[@class = 'lk-cv-block__select-scroll lk-cv-block__select-scroll_country js-custom-select-options']/button"));
-        webElementsCountry.get(2).click();
-
-        driver.findElement(city).click();
-        List<WebElement> webElementsCity = driver.findElements(By.xpath("//div[@class = 'lk-cv-block__select-scroll lk-cv-block__select-scroll_city js-custom-select-options']/button"));
-        webElementsCity.get(2).click();
-
-        driver.findElement(language).click();
-        List<WebElement> webElementsLanguage = driver.findElements(By.xpath("//div[@class = 'lk-cv-block__select-scroll  js-custom-select-options']/button"));
-        webElementsLanguage.get(2).click();
     }
 
     public void checkTextInTextArea(WebElement element, String expectedText){
         Assert.assertEquals(expectedText, element.getAttribute("value"));
     }
 
-    public void checkTextInCheckbox(WebElement element, String expectedText){
-        Assert.assertEquals(expectedText, element.getText());
-    }
-
     public void checkingData(){
         checkTextInTextArea(getElement(firstName), "Тест");
         checkTextInTextArea(getElement(secondName), "Тест");
         checkTextInTextArea(getElement(blogName), "Тест");
-        checkTextInCheckbox(getElement(country), "Республика Беларусь");
-        checkTextInCheckbox(getElement(city), "Борисов");
-        checkTextInCheckbox(getElement(language), "Элементарный уровень (Elementary)");
     }
 }
