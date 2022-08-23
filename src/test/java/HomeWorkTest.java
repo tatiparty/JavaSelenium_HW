@@ -10,8 +10,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import webDriverFactory.WebDriverFactory;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 import java.util.Properties;
@@ -32,20 +30,10 @@ public class HomeWorkTest {
 
     @Before
     public void setUp(){
-        Properties properties = new Properties();
-        try {
-            properties.load(new FileInputStream("config.properties"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        //login = properties.getProperty("login");
-        //password = properties.getProperty("password");
-
-        //не работает
         Properties prop = System.getProperties();
         login = System.getProperty("login");
         password = System.getProperty("password");
-        browser = properties.getProperty("browser");
+        browser = System.getProperty("browser");
 
         driver = WebDriverFactory.create(browser.toUpperCase());
     }

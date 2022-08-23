@@ -6,8 +6,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.opera.OperaDriver;
 
-import java.util.Locale;
-
 public class WebDriverFactory {
     public static WebDriver create(String browser){
         String optionChrome = BrowserOptions.CHROME.getOpt();
